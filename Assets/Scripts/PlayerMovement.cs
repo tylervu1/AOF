@@ -4,58 +4,97 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CharacterController controller;
-    public Transform playerCamera;
-    public float speed = 12f;
-    public float mouseSensitivity = 100f;
-    public float gravity = -9.81f;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
+    [Header("Movement")]
+    public float moveSpeed;
+    public float groundDrag;
+    public float jumpForce;
+    public float jumpCooldown;
+    public float airMultiplier;
+    bool canJump;
 
-    private Vector3 velocity;
-    private float xRotation = 0f;
-    private bool isGrounded;
+    [Header("Keybinds")]
+    public KeyCode jumpKey = KeyCode.Space;
 
+    [Header("Ground Check")]
+    public float playerHeight;
+    public LayerMask groundLayer;
+    bool isGrounded;
+
+    [Header("Other")]
+    public Transform orientation;
+
+    float horizontalInput;
+    float verticalInput;
+
+    Vector3 moveDirection;
+
+    Rigidbody rb;
+
+    // Start is called before the first frame update
     void Start()
     {
-        controller = GetComponent<CharacterController>();
-        Cursor.lockState = CursorLockMode.Locked;
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
+        canJump = true;
     }
 
+    // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics.CheckSphere(transform.position, groundDistance, groundMask);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayer);
+        MyInput();
+        SpeedControl();
+        if (isGrounded)
+            rb.drag = groundDrag;
+        else
+            rb.drag = 0;
+    }
 
-        if (isGrounded && velocity.y < 0)
+    private void FixedUpdate()
+    {
+        MovePlayer();
+    }
+
+    private void MyInput()
+    {
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+        if (Input.GetKey(jumpKey) && canJump && isGrounded)
         {
-            velocity.y = -2f;
+            canJump = false;
+            Jump();
+            Invoke(nameof(ResetJump), jumpCooldown);
         }
+    }
 
-        // Handle mouse movement
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+    private void MovePlayer()
+    {
+        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        if (isGrounded)
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        else
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        
+    }
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-        // Apply camera up/down rotation
-        if (playerCamera != null)
+    private void SpeedControl()
+    {
+        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        if (flatVel.magnitude > moveSpeed)
         {
-            playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
+    }
 
-        // Rotate the player left/right
-        transform.Rotate(Vector3.up * mouseX);
+    private void Jump()
+    {
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    }
 
-        // Handle keyboard movement
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        Vector3 move = transform.right * x + transform.forward * z;
-        controller.Move(move * speed * Time.deltaTime);
-
-        // Apply gravity
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+    private void ResetJump()
+    {
+        canJump = true;
     }
 }
