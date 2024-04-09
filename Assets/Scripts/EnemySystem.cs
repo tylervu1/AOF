@@ -9,9 +9,17 @@ public class EnemySystem : MonoBehaviour
     public Rigidbody rb;
     public Transform enemy;
     public Transform target;
-    private float speed_out_of_range = 1f;
-    private float speed_in_range = 0.5f;
+    public float speed_out_of_range = 1f;
+    public float speed_in_range = 0.5f;
+    public float bullet_speed;
     // Update is called once per frame
+    
+    
+    [SerializeField] private float timer = 2;
+    private float bulletTime;
+    public GameObject bullet;
+    public Transform spawnPoint;
+    
     void Update()
     {
         if (PlayerDetectionBig.found) {
@@ -35,6 +43,18 @@ public class EnemySystem : MonoBehaviour
             //} else {
             //    rb.velocity = new Vector3(0, 0, 0);
             //}
+            ShootAtPlayer();
         }
+
+        void ShootAtPlayer() {
+            bulletTime -= Time.deltaTime;
+            if (bulletTime > 0) return;
+            bulletTime = timer;
+            GameObject bulletObj = Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation) as GameObject;
+            Rigidbody bullet1 = bulletObj.GetComponent<Rigidbody>();
+            bullet1.AddForce(bullet1.transform.forward * 100*bullet_speed);
+            Destroy(bullet1, 1f);
+        }
+
     }
 }

@@ -20,6 +20,12 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundLayer;
     bool isGrounded;
 
+
+    [Header("Shooting")]
+    public float bullet_speed;
+    public GameObject bullet;
+    public Transform bulletSpawnPoint;
+
     [Header("Other")]
     public Transform orientation;
 
@@ -48,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+
     }
 
     private void FixedUpdate()
@@ -64,6 +71,11 @@ public class PlayerMovement : MonoBehaviour
             canJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
+        }
+        
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Shoot();
         }
     }
 
@@ -96,5 +108,14 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJump()
     {
         canJump = true;
+    }
+
+    private void Shoot()
+    {   
+        Debug.Log("shooting0");
+        GameObject bulletObj = Instantiate(bullet, bulletSpawnPoint.position, orientation.rotation) as GameObject;
+        Rigidbody bullet1 = bulletObj.GetComponent<Rigidbody>();
+        bullet1.AddForce(bullet1.transform.forward * bullet_speed);
+        Destroy(bullet1, 1f);
     }
 }
