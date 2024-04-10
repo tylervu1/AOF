@@ -138,6 +138,9 @@ public class PlayerMovement : MonoBehaviour
 
     void OnGUI() {
         GUI.skin = skin;
+
+        GUI.Label(new Rect(0, 0, 300, 100), "Health:" + health);
+
         if (gameEnd == 1)
         {
             Time.timeScale= 0;

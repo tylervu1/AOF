@@ -1042,6 +1042,7 @@ MonoBehaviour:
   max_health: 5
   healthBar: {fileID: 0}
   timer: 2
+  bulletTime: 0
   bullet: {fileID: 6360898371347339540}
   spawnPoint: {fileID: 819046488}
 --- !u!4 &2071943512 stripped
@@ -1253,7 +1254,7 @@ PrefabInstance:
       objectReference: {fileID: 1479517930}
     - target: {fileID: 5051248321865568474, guid: 9b65b01c08737489e80efd821002972b, type: 3}
       propertyPath: bullet_speed
-      value: 1000
+      value: 100000
       objectReference: {fileID: 0}
     - target: {fileID: 5051248321865568474, guid: 9b65b01c08737489e80efd821002972b, type: 3}
       propertyPath: bulletSpawnPoint
@@ -1383,12 +1384,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8118530379472424870, guid: 873e3c76df79d42a5ad9572dc9c097be, type: 3}
+      propertyPath: m_Mass
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8118530379472424870, guid: 873e3c76df79d42a5ad9572dc9c097be, type: 3}
       propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8118530379472424870, guid: 873e3c76df79d42a5ad9572dc9c097be, type: 3}
       propertyPath: m_AngularDrag
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8118530379472424870, guid: 873e3c76df79d42a5ad9572dc9c097be, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7023226852046658546, guid: 873e3c76df79d42a5ad9572dc9c097be, type: 3}

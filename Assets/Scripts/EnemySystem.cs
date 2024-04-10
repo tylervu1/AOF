@@ -18,7 +18,7 @@ public class EnemySystem : MonoBehaviour
     
     
     [SerializeField] private float timer = 2;
-    private float bulletTime;
+    [SerializeField] private float bulletTime;
     public GameObject bullet;
     public Transform spawnPoint;
     
@@ -26,6 +26,7 @@ public class EnemySystem : MonoBehaviour
     {
         healthBar = GetComponentInChildren<FloatingHealthBar>();
         health = max_health;
+        bulletTime = timer;
     }
     void Update()
     {
@@ -57,10 +58,10 @@ public class EnemySystem : MonoBehaviour
         bulletTime -= Time.deltaTime;
         if (bulletTime > 0) return;
         bulletTime = timer;
-        GameObject bulletObj = Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation) as GameObject;
+        GameObject bulletObj = Instantiate(bullet, enemy.transform.position, spawnPoint.transform.rotation) as GameObject;
         Rigidbody bullet1 = bulletObj.GetComponent<Rigidbody>();
         bullet1.AddForce(bullet1.transform.forward * 100*bullet_speed);
-        Destroy(bullet1, 1f);
+        // Destroy(bullet1, 1f);
     }
 
     public void TakeDamage(float damage) 
