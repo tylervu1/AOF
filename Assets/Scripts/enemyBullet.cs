@@ -18,6 +18,11 @@ public class enemyBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Player") {
+            PlayerMovement player = other.gameObject.transform.parent.gameObject.GetComponentInChildren<PlayerMovement>();
+            if (player)
+            {
+                player.TakeDamage(1);
+            }
             Destroy(gameObject);
         }
     }

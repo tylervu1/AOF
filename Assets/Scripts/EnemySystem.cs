@@ -12,6 +12,8 @@ public class EnemySystem : MonoBehaviour
     public float speed_out_of_range = 1f;
     public float speed_in_range = 0.5f;
     public float bullet_speed;
+    [SerializeField] float health, max_health = 5f; 
+    [SerializeField] FloatingHealthBar healthBar;
     // Update is called once per frame
     
     
@@ -20,6 +22,11 @@ public class EnemySystem : MonoBehaviour
     public GameObject bullet;
     public Transform spawnPoint;
     
+    void Awake()
+    {
+        healthBar = GetComponentInChildren<FloatingHealthBar>();
+        health = max_health;
+    }
     void Update()
     {
         if (PlayerDetectionBig.found) {
@@ -40,21 +47,29 @@ public class EnemySystem : MonoBehaviour
                     Vector3 pos = Vector3.MoveTowards(enemy.position, target.position, speed_out_of_range * Time.deltaTime);
                     rb.MovePosition(pos);
                 }
-            //} else {
-            //    rb.velocity = new Vector3(0, 0, 0);
-            //}
+
             ShootAtPlayer();
         }
+    }
 
-        void ShootAtPlayer() {
-            bulletTime -= Time.deltaTime;
-            if (bulletTime > 0) return;
-            bulletTime = timer;
-            GameObject bulletObj = Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation) as GameObject;
-            Rigidbody bullet1 = bulletObj.GetComponent<Rigidbody>();
-            bullet1.AddForce(bullet1.transform.forward * 100*bullet_speed);
-            Destroy(bullet1, 1f);
+    void ShootAtPlayer() 
+    {
+        bulletTime -= Time.deltaTime;
+        if (bulletTime > 0) return;
+        bulletTime = timer;
+        GameObject bulletObj = Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation) as GameObject;
+        Rigidbody bullet1 = bulletObj.GetComponent<Rigidbody>();
+        bullet1.AddForce(bullet1.transform.forward * 100*bullet_speed);
+        Destroy(bullet1, 1f);
+    }
+
+    public void TakeDamage(float damage) 
+    {
+        health -= damage;
+        healthBar.UpdateHealthBar(health, max_health);
+        if (health <= 0)
+        {
+            Destroy(gameObject);
         }
-
     }
 }

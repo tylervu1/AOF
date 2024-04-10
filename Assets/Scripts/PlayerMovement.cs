@@ -26,9 +26,14 @@ public class PlayerMovement : MonoBehaviour
     public GameObject bullet;
     public Transform bulletSpawnPoint;
 
+    [Header("Health")]
+    private float health, max_health = 10f;
+
     [Header("Other")]
     public Transform orientation;
-
+    
+    private int gameEnd = 0;
+    public GUISkin skin;
     float horizontalInput;
     float verticalInput;
 
@@ -42,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         canJump = true;
+        health = max_health;
     }
 
     // Update is called once per frame
@@ -117,5 +123,26 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody bullet1 = bulletObj.GetComponent<Rigidbody>();
         bullet1.AddForce(bullet1.transform.forward * bullet_speed);
         Destroy(bullet1, 1f);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            gameEnd = 1;
+        }
+        Debug.Log("Plyaer health" + health);
+
+    }
+
+    void OnGUI() {
+        GUI.skin = skin;
+        if (gameEnd == 1)
+        {
+            Time.timeScale= 0;
+            GUI.Label(new Rect(Screen.width/2 - 100, Screen.height/2, 500, 100), "Game Over!");
+            
+        }
     }
 }
