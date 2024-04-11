@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Health")]
     private float health, max_health = 10f;
+    public HealthBar healthBar;
 
     [Header("Other")]
     public Transform orientation;
@@ -48,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
         canJump = true;
         health = max_health;
+        healthBar.setMaxHealth(max_health);
     }
 
     // Update is called once per frame
@@ -128,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+        healthBar.setHealth(health);
         if (health <= 0)
         {
             gameEnd = 1;
@@ -139,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
     void OnGUI() {
         GUI.skin = skin;
 
-        GUI.Label(new Rect(0, 0, 300, 100), "Health:" + health);
+        // GUI.Label(new Rect(0, 0, 300, 100), "Health:" + health);
 
         if (gameEnd == 1)
         {
