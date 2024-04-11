@@ -124,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
         GameObject bulletObj = Instantiate(bullet, bulletSpawnPoint.position, orientation.rotation) as GameObject;
         Rigidbody bullet1 = bulletObj.GetComponent<Rigidbody>();
         bullet1.AddForce(bullet1.transform.forward * bullet_speed);
-        Destroy(bullet1, 1f);
+        Destroy(bulletObj, 1f);
     }
 
     public void TakeDamage(float damage)
