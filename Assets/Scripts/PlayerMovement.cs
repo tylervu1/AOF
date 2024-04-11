@@ -120,10 +120,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void Shoot()
     {   
-        Debug.Log("shooting0");
-        GameObject bulletObj = Instantiate(bullet, bulletSpawnPoint.position, orientation.rotation) as GameObject;
+        GameObject bulletObj = Instantiate(bullet, transform.position, orientation.rotation) as GameObject;
         Rigidbody bullet1 = bulletObj.GetComponent<Rigidbody>();
+        
+        bullet1.transform.rotation = orientation.rotation;
+
         bullet1.AddForce(bullet1.transform.forward * bullet_speed);
+        Debug.Log("orientation" + orientation.rotation);
+        Debug.Log("bullet1" + bullet1.transform.forward);
+
+        Debug.Log("Vector3" + Vector3.forward);
+        // bullet1.velocity = transform.TransformDirection(Vector3.forward * bullet_speed);
+
         Destroy(bulletObj, 1f);
     }
 
@@ -135,7 +143,6 @@ public class PlayerMovement : MonoBehaviour
         {
             gameEnd = 1;
         }
-        Debug.Log("Plyaer health" + health);
 
     }
 
