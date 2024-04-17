@@ -21,6 +21,7 @@ public class EnemySystem : MonoBehaviour
     [SerializeField] private float bulletTime;
     public GameObject bullet;
     public Transform spawnPoint;
+    public GameControl game;
     
     void Awake()
     {
@@ -72,6 +73,9 @@ public class EnemySystem : MonoBehaviour
         {
             Destroy(gameObject);
             EnemySpawning.enemyCount -=1;
+            game.AddScore(5);
+        } else  {
+            game.AddScore(2);
         }
     }
 }

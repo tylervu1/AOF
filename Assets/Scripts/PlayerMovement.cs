@@ -33,11 +33,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Other")]
     public Transform orientation;
     
-    private int gameEnd = 0;
-    public GUISkin skin;
     float horizontalInput;
     float verticalInput;
 
+    public GameControl game;
     Vector3 moveDirection;
 
     Rigidbody rb;
@@ -134,21 +133,8 @@ public class PlayerMovement : MonoBehaviour
         healthBar.setHealth(health);
         if (health <= 0)
         {
-            gameEnd = 1;
+            game.EndGame();
         }
 
-    }
-
-    void OnGUI() {
-        GUI.skin = skin;
-
-        // GUI.Label(new Rect(0, 0, 300, 100), "Health:" + health);
-
-        if (gameEnd == 1)
-        {
-            Time.timeScale= 0;
-            GUI.Label(new Rect(Screen.width/2 - 100, Screen.height/2, 500, 100), "Game Over!");
-            
-        }
     }
 }

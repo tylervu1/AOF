@@ -5,7 +5,6 @@ using UnityEngine;
 public class playerBullet : MonoBehaviour
 
 {
-    public static int score = 10;
     // Start is called before the first frame update
     void Start()
     {}
@@ -24,11 +23,7 @@ public class playerBullet : MonoBehaviour
                 enemy.TakeDamage(1);
             }
             Destroy(gameObject);
-            score +=10;
         }
     }
 
-    void onGUI() {
-        GUI.Label(new Rect(100, 0, 400, 400), "Score: " + score);
-    }
 }

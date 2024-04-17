@@ -12,15 +12,16 @@ public class EnemySpawning : MonoBehaviour
     [Header("For instantiating enemies")]
     public GameObject player;
     public Transform target;
+    public GameControl game;
 
     [Header("Spawning values")]
-    [SerializeField] static int level = 1;
     public float xPoz;
     public float yPoz;
     [SerializeField] float currTime, maxTime;
 
 
     public static int enemyCount = 0;
+    [SerializeField] int maxEnemy;
     [SerializeField] GameObject[] enemyList;
     private EnemySystem enemyScript;
 
@@ -30,26 +31,21 @@ public class EnemySpawning : MonoBehaviour
     {
         maxTime = 5f;
         enemyList = new GameObject[] {banana, lemon, melon, carrot};
+        maxEnemy = game.GetMaxEnemies();
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (level)
+        if (game.level == 0) //tutorial
         {
-            case 0: // tutorial
-                Debug.Log("Tutorial");
-                break;
-
-            case 1:
-                Debug.Log("Starting level 1"); 
-                //x from -244 to -87; y from 34 to -218 
+            Debug.Log("tutorial");
+        } else {
+            if (enemyCount < maxEnemy)
+            {
                 SpawnEnemy(enemyList, -15, -25, -15, -20);
-                break;
-
+            }
         }
-        // if (level > 0) {
-        // }
     }
 
     void SpawnEnemy(GameObject[] possibleEnemies, float xpoz1, float xpoz2, float ypoz1, float ypoz2) {
@@ -65,7 +61,11 @@ public class EnemySpawning : MonoBehaviour
         enemyScript = enemy.GetComponent<EnemySystem>();
         enemyScript.target= target;
         enemyScript.player = player;
+        enemyScript.game = game;
 
         Debug.Log($"spawned an enemy at position {xPoz}, {yPoz}. Current enemy count: {enemyCount}");
     }
 }
+
+
+
