@@ -71,6 +71,7 @@ public class EnemySystem : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
+            EnemySpawning.enemyCount -=1;
         }
     }
 }
