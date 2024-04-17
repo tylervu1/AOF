@@ -35,10 +35,10 @@ public class EnemySystem : MonoBehaviour
         } 
 
         if (lookat) {
-            Vector3 targetPosition = new Vector3(   player.transform.position.x,
-                                                    transform.position.y,
-                                                    player.transform.position.z);
-            transform.LookAt(targetPosition);
+            Vector3 targetPosition = new Vector3(   target.transform.position.x,
+                                                    enemy.transform.position.y,
+                                                    target.transform.position.z);
+            enemy.transform.LookAt(targetPosition);
 
             //if (!PlayerDetectionSmall.found) {
                 if (PlayerDetectionBig.found) {
@@ -58,7 +58,7 @@ public class EnemySystem : MonoBehaviour
         bulletTime -= Time.deltaTime;
         if (bulletTime > 0) return;
         bulletTime = timer;
-        GameObject bulletObj = Instantiate(bullet, transform.position, spawnPoint.transform.rotation) as GameObject;
+        GameObject bulletObj = Instantiate(bullet, spawnPoint.transform.position, enemy.transform.rotation) as GameObject;
         Rigidbody bullet1 = bulletObj.GetComponent<Rigidbody>();
         bullet1.AddForce(bullet1.transform.forward * 100*bullet_speed);
         Destroy(bulletObj, 2f);
