@@ -45234,6 +45234,7 @@ MonoBehaviour:
   maxTime: 0
   maxEnemy: 0
   enemyList: []
+  level: {fileID: 0}
 --- !u!4 &1363610751
 Transform:
   m_ObjectHideFlags: 0
@@ -69593,6 +69594,7 @@ MonoBehaviour:
   EndText: {fileID: 1259578689}
   level: 1
   enemySpawning: {fileID: 1363610750}
+  currLevel: {fileID: 0}
 --- !u!4 &2145618035
 Transform:
   m_ObjectHideFlags: 0

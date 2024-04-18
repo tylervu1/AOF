@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemySpawning : MonoBehaviour
 {
+    [Header("types of enemies")]
     public GameObject banana;
     public GameObject lemon;
     public GameObject melon;
@@ -14,17 +15,13 @@ public class EnemySpawning : MonoBehaviour
     public Transform target;
     public GameControl game;
 
-    [Header("Spawning values")]
+    [Header("Spawning control")]
     public float xPoz;
     public float yPoz;
     [SerializeField] float currTime, maxTime;
-
-
     public static int enemyCount = 0;
     [SerializeField] int maxEnemy;
     [SerializeField] GameObject[] enemyList;
-    private EnemySystem enemyScript;
-
 
     // Start is called before the first frame update
     void Start()
@@ -37,13 +34,13 @@ public class EnemySpawning : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (game.level == 0) //tutorial
+        if (game.currLevel.level == 0) //tutorial
         {
             Debug.Log("tutorial");
         } else {
-            if (enemyCount < maxEnemy)
+            if (enemyCount < game.currLevel.maxEnemy)
             {
-                SpawnEnemy(enemyList, -15, -25, -15, -20);
+                SpawnEnemy(enemyList, game.currLevel.xPoz1, game.currLevel.xPoz2, game.currLevel.yPoz1, game.currLevel.yPoz2);
             }
         }
     }
@@ -58,7 +55,7 @@ public class EnemySpawning : MonoBehaviour
         enemyCount += 1;
 
         GameObject enemy = Instantiate(possibleEnemies[0], new Vector3(xPoz, 5, yPoz), Quaternion.identity);
-        enemyScript = enemy.GetComponent<EnemySystem>();
+        EnemySystem enemyScript = enemy.GetComponent<EnemySystem>();
         enemyScript.target= target;
         enemyScript.player = player;
         enemyScript.game = game;

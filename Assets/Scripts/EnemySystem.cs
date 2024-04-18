@@ -4,25 +4,33 @@ using UnityEngine;
 
 public class EnemySystem : MonoBehaviour
 {
-    bool lookat = false;
+    [Header("General")]
     public GameObject player;
     public Rigidbody rb;
     public Transform enemy;
     public Transform target;
+    public GameControl game;
+
+
+    [Header("Movement")]
+    bool lookat = false;
     public float speed_out_of_range = 1f;
     public float speed_in_range = 0.5f;
-    public float bullet_speed;
+
+    [Header("Health")]
     [SerializeField] float health, max_health = 5f; 
     [SerializeField] FloatingHealthBar healthBar;
     // Update is called once per frame
     
-    
+    [Header("Shooting")]
+    public float bullet_speed;
     [SerializeField] private float timer = 2;
     [SerializeField] private float bulletTime;
     public GameObject bullet;
     public Transform spawnPoint;
-    public GameControl game;
-    
+    public int hitByBulletPoint;
+    public int killedPoint;
+
     void Awake()
     {
         healthBar = GetComponentInChildren<FloatingHealthBar>();
@@ -73,9 +81,9 @@ public class EnemySystem : MonoBehaviour
         {
             Destroy(gameObject);
             EnemySpawning.enemyCount -=1;
-            game.AddScore(5);
+            game.AddScore(killedPoint);
         } else  {
-            game.AddScore(2);
+            game.AddScore(hitByBulletPoint);
         }
     }
 }

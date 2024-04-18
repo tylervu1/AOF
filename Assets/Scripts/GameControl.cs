@@ -13,17 +13,18 @@ public class GameControl : MonoBehaviour
 
     [Header("level up values")]
     public static int score = 0; 
-    public int level = 1;
     public EnemySpawning enemySpawning;
     private int[] ScoreThreshold = new int[] {15, 30, 45, 60, 100, 200};
     private int[] EnemyMax = new int[] {1, 2, 4, 6, 8, 10};
-    
 
+
+    public LevelValues currLevel;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        currLevel = LevelValues.newLevel(1, -15, -25, -15, -20, EnemyMax[1], ScoreThreshold[1]);
+        Debug.Log(currLevel.level);
     }
 
     // Update is called once per frame
@@ -35,7 +36,7 @@ public class GameControl : MonoBehaviour
     {
         score += n;
         ScoreText.SetText($"Score: {score}");
-        if (score >= ScoreThreshold[level])
+        if (score >= ScoreThreshold[currLevel.level])
         {
             NextLevel();
         }
@@ -43,15 +44,15 @@ public class GameControl : MonoBehaviour
 
     private void NextLevel() //how to make new level only appear for a few seconds
     {
-        level +=1;
-        LevelText.SetText($"Moving onto level {level}!");
-        Debug.Log("New Level");
+        currLevel = currLevel.nextLevel(-15, -25, -15, -20, EnemyMax[currLevel.level], ScoreThreshold[currLevel.level]);
+        LevelText.SetText($"Moving onto level {currLevel.level}!");
+        Debug.Log($"New Level {currLevel.level}");
         LevelText.SetText("");
     }
 
     public int GetMaxEnemies()
     {
-        return EnemyMax[level];
+        return EnemyMax[currLevel.level];
     }
 
     public void EndGame() 
