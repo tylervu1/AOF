@@ -1,5 +1,73 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4418384652330203045
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5113442906602542744}
+  - component: {fileID: 4334379874721524887}
+  - component: {fileID: 184245918054446961}
+  m_Layer: 0
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5113442906602542744
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4418384652330203045}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7747701523919623971}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4334379874721524887
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4418384652330203045}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.46074525, y: 1.0043869, z: 0.87490547}
+  m_Center: {x: -0.045826886, y: 0.77135974, z: -0.13114019}
+--- !u!114 &184245918054446961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4418384652330203045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 481c12cc03bde414c80f89d4d16474c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemy: {fileID: 9146806361287987411}
+  DamageOnHit: 3
 --- !u!1 &8988187663147913402
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,16 +193,19 @@ MonoBehaviour:
   rb: {fileID: 1412903411624221251}
   enemy: {fileID: 7747701523919623971}
   target: {fileID: 0}
+  game: {fileID: 0}
   speed_out_of_range: 10
   speed_in_range: 10
-  bullet_speed: 10
   health: 3
   max_health: 5
   healthBar: {fileID: 7286171006598300700}
+  bullet_speed: 10
   timer: 2
   bulletTime: 0
   bullet: {fileID: 8898711027104581272, guid: 143b0092b2fa4450d8d8071653599ef4, type: 3}
   spawnPoint: {fileID: 2266651739320898737}
+  hitByBulletPoint: 2
+  killedPoint: 9
 --- !u!1001 &3853451650269541555
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -217,7 +288,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6845304997774500752, guid: 5e7ca939531914c4482cd4dc59e3773c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5113442906602542744}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6175763351671306538, guid: 5e7ca939531914c4482cd4dc59e3773c, type: 3}
       insertIndex: -1

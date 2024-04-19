@@ -11,18 +11,24 @@ public class playerBullet : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        
-    }
+    {}
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Enemy") {
+            Debug.Log("hit enemey");
             EnemySystem enemy = other.gameObject.transform.parent.gameObject.GetComponentInChildren<EnemySystem>();
             if (enemy)
             {
                 enemy.TakeDamage(1);
             }
-            Destroy(gameObject);
+            if (gameObject){    
+                Destroy(gameObject);
+            }
+        } else if (LayerMask.LayerToName(other.gameObject.layer) == "Ground") {
+            Debug.Log("hit Ground");
+            // if (gameObject){
+            //     Destroy(gameObject);
+            // }
         }
     }
 

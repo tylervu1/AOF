@@ -70,7 +70,8 @@ public class EnemySystem : MonoBehaviour
         GameObject bulletObj = Instantiate(bullet, spawnPoint.transform.position, enemy.transform.rotation) as GameObject;
         Rigidbody bullet1 = bulletObj.GetComponent<Rigidbody>();
         bullet1.AddForce(bullet1.transform.forward * 100*bullet_speed);
-        Destroy(bulletObj, 2f);
+
+        Destroy(bulletObj, 3f);
     }
 
     public void TakeDamage(float damage) 
