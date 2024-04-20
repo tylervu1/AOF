@@ -267,10 +267,17 @@ MonoBehaviour:
   airMultiplier: 0.4
   jumpKey: 32
   playerHeight: 2
-  whatIsGround:
+  groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
+  bullet_speed: 0
+  bullet: {fileID: 0}
+  bulletSpawnPoint: {fileID: 0}
+  healthBar: {fileID: 0}
+  player_hit_sound: {fileID: 0}
+  shuriken_sound: {fileID: 0}
   orientation: {fileID: 7988278308647771853}
+  game: {fileID: 0}
 --- !u!1 &7941298900606144045
 GameObject:
   m_ObjectHideFlags: 0

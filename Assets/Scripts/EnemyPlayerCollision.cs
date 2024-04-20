@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyPlayerCollision : MonoBehaviour
 {
-    public GameObject Enemy;
+    public EnemySystem Enemy;
     public int DamageOnHit;
     // Start is called before the first frame update
     void Start()
@@ -15,7 +15,6 @@ public class EnemyPlayerCollision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -24,9 +23,12 @@ public class EnemyPlayerCollision : MonoBehaviour
             PlayerMovement player = other.gameObject.transform.parent.gameObject.GetComponentInChildren<PlayerMovement>();
             if (player)
             {
-                player.TakeDamage(3);
+                player.TakeDamage(DamageOnHit);
             }
-            Destroy(Enemy.gameObject);
+            StartCoroutine(Enemy.DestroyAfterSound(Enemy.deathClip.length/6));
+            Enemy.game.enemySpawning.RemoveEnemy(Enemy.gameObject);
         }
     }
+
+    
 }

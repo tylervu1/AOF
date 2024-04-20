@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 481c12cc03bde414c80f89d4d16474c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy: {fileID: 5429036716638197985}
+  Enemy: {fileID: 0}
   DamageOnHit: 3
 --- !u!1 &5429036716638197985
 GameObject:
@@ -120,20 +120,21 @@ MonoBehaviour:
   target: {fileID: 0}
   game: {fileID: 0}
   speed_out_of_range: 10
-  speed_in_range: 10
+  speed_in_range: 8
   health: 3
-  max_health: 5
+  max_health: 4
   healthBar: {fileID: 5739853606535485744}
-  bullet_speed: 10
+  bulletHitPlayerP: 0
+  bullet_speed: 8
   timer: 2
   bulletTime: 0
   bullet: {fileID: 8898711027104581272, guid: 143b0092b2fa4450d8d8071653599ef4, type: 3}
   spawnPoint: {fileID: 5767746941006211687}
-  hitByBulletPoint: 6
-  killedPoint: 10
-  enemy_shoot_sound: {fileID: 0}
-  enemy_hit_sound: {fileID: 0}
-  enemy_death_sound: {fileID: 0}
+  hitByBulletPoint: 4
+  killedPoint: 7
+  shootClip: {fileID: 8300000, guid: d7eb2f79e9d3747ef88218d307d2c201, type: 3}
+  hitClip: {fileID: 8300000, guid: 4e17059b9eee844d0be1a79981e80218, type: 3}
+  deathClip: {fileID: 8300000, guid: cc0c58b113c19456d9911348003e56c8, type: 3}
 --- !u!1 &9041987293686671026
 GameObject:
   m_ObjectHideFlags: 0

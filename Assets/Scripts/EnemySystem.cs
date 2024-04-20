@@ -14,12 +14,13 @@ public class EnemySystem : MonoBehaviour
 
     [Header("Movement")]
     bool lookat = false;
-    public float speed_out_of_range = 1f;
-    public float speed_in_range = 0.5f;
+    public float speed_out_of_range;
+    public float speed_in_range;
 
     [Header("Health")]
     [SerializeField] float health, max_health = 5f; 
     [SerializeField] FloatingHealthBar healthBar;
+    [SerializeField] float bulletHitPlayerP;
     // Update is called once per frame
     
     [Header("Shooting")]
@@ -83,14 +84,15 @@ public class EnemySystem : MonoBehaviour
             enemy.transform.LookAt(targetPosition);
 
             //if (!PlayerDetectionSmall.found) {
-                if (PlayerDetectionBig.found) {
-                    Vector3 pos = Vector3.MoveTowards(enemy.position, target.position, speed_in_range * Time.deltaTime);
-                    rb.MovePosition(pos);
-                } else {
-                    Vector3 pos = Vector3.MoveTowards(enemy.position, target.position, speed_out_of_range * Time.deltaTime);
-                    rb.MovePosition(pos);
-                }
-            ShootAtPlayer();
+            if (PlayerDetectionBig.found) {
+                Vector3 pos = Vector3.MoveTowards(enemy.position, target.position, speed_in_range * Time.deltaTime);
+                rb.MovePosition(pos);
+                ShootAtPlayer();
+
+            } else {
+                Vector3 pos = Vector3.MoveTowards(enemy.position, target.position, speed_out_of_range * Time.deltaTime);
+                rb.MovePosition(pos);
+            }
         }
     }
 
@@ -102,6 +104,7 @@ public class EnemySystem : MonoBehaviour
         bulletTime = timer;
         GameObject bulletObj = Instantiate(bullet, spawnPoint.transform.position, enemy.transform.rotation) as GameObject;
         Rigidbody bullet1 = bulletObj.GetComponent<Rigidbody>();
+        bulletObj.GetComponent<enemyBullet>().hitPlayerPoint = bulletHitPlayerP;
         bullet1.AddForce(bullet1.transform.forward * 100*bullet_speed);
 
         Destroy(bulletObj, 3f);
@@ -113,6 +116,10 @@ public class EnemySystem : MonoBehaviour
         healthBar.UpdateHealthBar(health, max_health);
         if (health <= 0)
         {
+            Debug.Log("killing enemy");
+            game.enemySpawning.RemoveEnemy(gameObject);
+            // EnemySpawning.enemyCount -=1;
+
             isAlive = false;
             childRenderer.enabled = false;
             childCollider.enabled = false;
@@ -121,7 +128,6 @@ public class EnemySystem : MonoBehaviour
             childCanvas.enabled = false;
 
             deathSource.Play();
-            EnemySpawning.enemyCount -=1;
             game.AddScore(killedPoint);
             StartCoroutine(DestroyAfterSound(deathClip.length));
         } else  {
@@ -130,7 +136,7 @@ public class EnemySystem : MonoBehaviour
         }
     }
 
-    private IEnumerator DestroyAfterSound(float delay)
+    public IEnumerator DestroyAfterSound(float delay)
     {
         yield return new WaitForSeconds(delay);
         Destroy(gameObject);

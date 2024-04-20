@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 481c12cc03bde414c80f89d4d16474c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy: {fileID: 2543179800259568326}
+  Enemy: {fileID: 3311577308007492846}
   DamageOnHit: 3
 --- !u!1 &2505822912898126289
 GameObject:
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 3311577308007492846}
   m_Layer: 0
   m_Name: BananaEnemy
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -156,16 +156,17 @@ MonoBehaviour:
   target: {fileID: 0}
   game: {fileID: 0}
   speed_out_of_range: 10
-  speed_in_range: 10
-  health: 3
+  speed_in_range: 7
+  health: 5
   max_health: 5
   healthBar: {fileID: 1765862762560790712}
-  bullet_speed: 10
+  bulletHitPlayerP: 0
+  bullet_speed: 6
   timer: 2
   bulletTime: 0
   bullet: {fileID: 5253905506462650676, guid: 4923f985c8a1b47789e8f42e85c01775, type: 3}
   spawnPoint: {fileID: 5476750152796563973}
-  hitByBulletPoint: 2
+  hitByBulletPoint: 1
   killedPoint: 5
   shootClip: {fileID: 8300000, guid: d7eb2f79e9d3747ef88218d307d2c201, type: 3}
   hitClip: {fileID: 8300000, guid: 4e17059b9eee844d0be1a79981e80218, type: 3}
@@ -639,6 +640,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4857779144064277305}
     m_Modifications:
+    - target: {fileID: 4723552109491717221, guid: a4a54d30e97ac40af84d8505fa63ef93, type: 3}
+      propertyPath: m_Name
+      value: Banana
+      objectReference: {fileID: 0}
     - target: {fileID: 5804526065394646533, guid: a4a54d30e97ac40af84d8505fa63ef93, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -686,6 +691,10 @@ PrefabInstance:
     - target: {fileID: 6612974337440326847, guid: a4a54d30e97ac40af84d8505fa63ef93, type: 3}
       propertyPath: m_TagString
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6873216742009295602, guid: a4a54d30e97ac40af84d8505fa63ef93, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

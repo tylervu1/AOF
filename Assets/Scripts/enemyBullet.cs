@@ -6,6 +6,7 @@ public class enemyBullet : MonoBehaviour
 {
     public AudioClip shootClip;
     private AudioSource shootSource;
+    public float hitPlayerPoint;
 
     // Start is called before the first frame update
     void Start()

@@ -11,21 +11,54 @@ public class GameControl : MonoBehaviour
     public TMP_Text LevelText;
     public TMP_Text EndText;
 
-    [Header("level up values")]
+
+    [Header("types of enemies")]
+    public GameObject banana;
+    public GameObject lemon;
+    public GameObject melon;
+    public GameObject carrot;
+    public GameObject[][] enemyList;
+
+    [Header("Game Stats")]
     public static int score = 0; 
     public EnemySpawning enemySpawning;
-
-    private int[] ScoreThreshold = new int[] {15, 30, 45, 60, 100, 200};
-    private int[] EnemyMax = new int[] {1, 2, 4, 6, 8, 10};
-
 
     public LevelValues currLevel;
 
     // Start is called before the first frame update
     void Start()
     {
-        currLevel = LevelValues.newLevel(1, -15, -25, -15, -20);
-        Debug.Log(currLevel.level);
+        LevelValues.banana = banana;
+        LevelValues.carrot = carrot;
+        LevelValues.melon = melon;
+        LevelValues.lemon = lemon;
+        enemyList = new[] {
+            new [] {banana},
+            new [] {banana},
+            new [] {carrot},
+            new [] {banana, carrot},
+            new [] {banana, carrot},
+            new [] {lemon},
+            new [] {banana, carrot, lemon},
+            new [] {banana, carrot, lemon},
+            new [] {banana, carrot, lemon},
+            new [] {banana, carrot, lemon},
+            new [] {melon},
+            new [] {banana, carrot, lemon, melon},
+            new [] {banana, carrot, lemon, melon}
+        };
+
+        currLevel = LevelValues.newLevel(0, -15, -25, -15, -20);
+        if (currLevel.level < enemyList.Length) {
+            currLevel.possibleEnemies = enemyList[currLevel.level];
+        } else {
+            currLevel.possibleEnemies = enemyList[^1];
+        }
+        Debug.Log($"Current Level{currLevel.level}");
+        enemySpawning.numEnemiesToSpawn = currLevel.totalEnemies;
+        enemySpawning.possibleEnemies = currLevel.possibleEnemies;
+
+
     }
 
     // Update is called once per frame
@@ -37,24 +70,23 @@ public class GameControl : MonoBehaviour
     {
         score += n;
         ScoreText.SetText($"Score: {score}");
-        Debug.Log($"New Scroe{score}");
-        if (score >= ScoreThreshold[currLevel.level])
-        {
-            NextLevel();
-        }
     }
 
-    private void NextLevel() //how to make new level only appear for a few seconds
+    public void NextLevel() //how to make new level only appear for a few seconds
     {
+        Debug.Log($"Moving on to level {currLevel.level + 1}");
         currLevel = currLevel.nextLevel(-15, -25, -15, -20);
+        if (currLevel.level < enemyList.Length) {
+            currLevel.possibleEnemies = enemyList[currLevel.level];
+        } else {
+            currLevel.possibleEnemies = enemyList[^1];
+        }
         LevelText.SetText($"Moving onto level {currLevel.level}!");
-        Debug.Log($"New Level {currLevel.level}");
         LevelText.SetText("");
-    }
+        enemySpawning.numEnemiesToSpawn = currLevel.totalEnemies;
+        enemySpawning.possibleEnemies = currLevel.possibleEnemies;
 
-    public int GetMaxEnemies()
-    {
-        return EnemyMax[currLevel.level];
+        
     }
 
     public void EndGame() 
@@ -83,3 +115,4 @@ public class GameControl : MonoBehaviour
 // Make the bullet match that of the enemy
 // Create the tutorial/instruction page (just up/down/right/left/space movement, left click to shoot and mouse to aim, avoid enemy shots, but kill them)
 // If two bullets collide, destory them both (fruit ninja aspect)
+

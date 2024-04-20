@@ -3,7 +3,14 @@ guid: 22f56997496194e25b47a931099ea90e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - banana: {fileID: 2543179800259568326, guid: a682e929afb8c4882abe03239f6529ae, type: 3}
+  - lemon: {fileID: 9146806361287987411, guid: 82516ac54668042b79e7e4ce8ad235ba, type: 3}
+  - melon: {fileID: 5429036716638197985, guid: fffb4cd64a8f0419a977396b379219ab, type: 3}
+  - carrot: {fileID: 294666932377292546, guid: cb9483c35a4c546a4be389a6950672b5, type: 3}
+  - player: {fileID: 8718187181020689268, guid: 9b65b01c08737489e80efd821002972b, type: 3}
+  - target: {instanceID: 0}
+  - game: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
