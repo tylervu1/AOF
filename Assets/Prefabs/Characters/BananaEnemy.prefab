@@ -167,6 +167,9 @@ MonoBehaviour:
   spawnPoint: {fileID: 5476750152796563973}
   hitByBulletPoint: 2
   killedPoint: 5
+  shootClip: {fileID: 8300000, guid: d7eb2f79e9d3747ef88218d307d2c201, type: 3}
+  hitClip: {fileID: 8300000, guid: 4e17059b9eee844d0be1a79981e80218, type: 3}
+  deathClip: {fileID: 8300000, guid: cc0c58b113c19456d9911348003e56c8, type: 3}
 --- !u!1 &3499493068592259325
 GameObject:
   m_ObjectHideFlags: 0

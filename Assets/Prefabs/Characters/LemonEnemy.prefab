@@ -206,6 +206,9 @@ MonoBehaviour:
   spawnPoint: {fileID: 2266651739320898737}
   hitByBulletPoint: 2
   killedPoint: 9
+  enemy_shoot_sound: {fileID: 0}
+  enemy_hit_sound: {fileID: 0}
+  enemy_death_sound: {fileID: 0}
 --- !u!1001 &3853451650269541555
 PrefabInstance:
   m_ObjectHideFlags: 0

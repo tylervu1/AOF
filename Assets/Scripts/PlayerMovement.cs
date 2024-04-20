@@ -30,6 +30,10 @@ public class PlayerMovement : MonoBehaviour
     private float health, max_health = 10f;
     public HealthBar healthBar;
 
+    [Header("Sounds")]
+    public AudioSource player_hit_sound;
+    public AudioSource shuriken_sound;
+
     [Header("Other")]
     public Transform orientation;
     
@@ -118,7 +122,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void Shoot()
-    {   
+    {
+        shuriken_sound.Play();   
         GameObject bulletObj = Instantiate(bullet, bulletSpawnPoint.position, orientation.rotation) as GameObject;
         Rigidbody bullet1 = bulletObj.GetComponent<Rigidbody>();
 
@@ -129,6 +134,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        player_hit_sound.Play();
         health -= damage;
         healthBar.setHealth(health);
         if (health <= 0)

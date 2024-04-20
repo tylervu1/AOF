@@ -4,10 +4,22 @@ using UnityEngine;
 
 public class enemyBullet : MonoBehaviour
 {
+    public AudioClip shootClip;
+    private AudioSource shootSource;
 
     // Start is called before the first frame update
     void Start()
     {
+        shootSource = AddAudioSource(shootClip);
+        shootSource.Play();
+    }
+
+    private AudioSource AddAudioSource(AudioClip clip)
+    {
+        AudioSource source = gameObject.AddComponent<AudioSource>();
+        source.clip = clip;
+        source.playOnAwake = false;
+        return source;
     }
 
     // Update is called once per frame
