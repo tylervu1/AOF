@@ -116,7 +116,7 @@ public class EnemySystem : MonoBehaviour
         healthBar.UpdateHealthBar(health, max_health);
         if (health <= 0)
         {
-            Debug.Log("killing enemy");
+            // Debug.Log("killing enemy");
             game.enemySpawning.RemoveEnemy(gameObject);
             // EnemySpawning.enemyCount -=1;
 

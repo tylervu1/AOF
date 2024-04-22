@@ -48,17 +48,8 @@ public class GameControl : MonoBehaviour
             new [] {banana, carrot, lemon, melon}
         };
 
-        currLevel = LevelValues.newLevel(0, -15, -25, -15, -20);
-        if (currLevel.level < enemyList.Length) {
-            currLevel.possibleEnemies = enemyList[currLevel.level];
-        } else {
-            currLevel.possibleEnemies = enemyList[^1];
-        }
-        Debug.Log($"Current Level{currLevel.level}");
-        enemySpawning.numEnemiesToSpawn = currLevel.totalEnemies;
-        enemySpawning.possibleEnemies = currLevel.possibleEnemies;
-
-
+        currLevel = LevelValues.startNewLevel();
+        NextLevel();
     }
 
     // Update is called once per frame
@@ -75,18 +66,18 @@ public class GameControl : MonoBehaviour
     public void NextLevel() //how to make new level only appear for a few seconds
     {
         Debug.Log($"Moving on to level {currLevel.level + 1}");
-        currLevel = currLevel.nextLevel(-15, -25, -15, -20);
+        currLevel = currLevel.nextLevel();
         if (currLevel.level < enemyList.Length) {
             currLevel.possibleEnemies = enemyList[currLevel.level];
         } else {
             currLevel.possibleEnemies = enemyList[^1];
         }
+
         LevelText.SetText($"Moving onto level {currLevel.level}!");
         LevelText.SetText("");
         enemySpawning.numEnemiesToSpawn = currLevel.totalEnemies;
         enemySpawning.possibleEnemies = currLevel.possibleEnemies;
-
-        
+        enemySpawning.possibleLocations = currLevel.possibleLocations;
     }
 
     public void EndGame() 

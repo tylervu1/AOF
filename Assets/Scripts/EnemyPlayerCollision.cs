@@ -18,7 +18,7 @@ public class EnemyPlayerCollision : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        Debug.Log("Hit player");
+        // Debug.Log("Hit player");
         if (other.gameObject.tag == "Player") {
             PlayerMovement player = other.gameObject.transform.parent.gameObject.GetComponentInChildren<PlayerMovement>();
             if (player)

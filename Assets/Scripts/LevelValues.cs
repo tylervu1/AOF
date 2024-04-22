@@ -12,48 +12,75 @@ public class LevelValues : MonoBehaviour
     public static GameObject melon;
     public static GameObject carrot;
 
-    // public GameObject[,] possibleEnemies = new GameObject[] [[banana], [banana], [carrot], [banana, carrot], [banana, carrot], [lemon], [banana, carrot, lemon], [banana, carrot, lemon], [banana, carrot, lemon], [banana, carrot, lemon], [banana, carrot, lemon, melon]];
     public GameObject[] possibleEnemies;
 
     [Header("Level-Specific")]
-    public int level;
-    public int xPoz1, xPoz2, yPoz1, yPoz2;
+    public int level = 0;
+    public float xPoz1, xPoz2, yPoz1, yPoz2;
     public float spawningRate;
     public int totalEnemies;
+
+    private static Hashtable regionLabel = new Hashtable() {
+        {0, new int[]{1}},
+        {1, new int[]{1}},
+        {2, new int[]{2}},
+        {3, new int[]{1,2}},
+        {4, new int[]{1,2}},
+        {5, new int[]{1,3}},
+        {6, new int[]{3}},
+        {7, new int[]{2,3}},
+        {8, new int[]{1, 2, 3}},
+        {9, new int[]{1, 2, 3}},
+        {10, new int[]{4}},
+        {12, new int[]{1, 2, 3, 4}}
+    };
+    private int maxRecordedLevel = 12;
+
+    public float[,] possibleLocations;
+
+    private static Hashtable regionSpawnValues = new Hashtable() {
+        {1, new float[] {-30,-13,-18, -5}},
+        {2, new float[] {-30, -12, 2, 20}},
+        {3, new float[] {-15, 11, 16, 38}},
+        {4, new float[] {22, 34, -26, -36}},
+    };
+
 
     void Start()
     {
         
     }
-    public static LevelValues newLevel(int levelNum, int xPoz1, int xPoz2, int yPoz1, int yPoz2) 
+    public static LevelValues startNewLevel()
     {
-        LevelValues level = new LevelValues();
-        level.level = levelNum;
-        level.xPoz1 = xPoz1;
-        level.xPoz2 = xPoz2;
-        level.yPoz1 = yPoz1;
-        level.yPoz2 = yPoz2;
-        level.totalEnemies = 1;
-        return level;
+        LevelValues emptyLevel = new LevelValues();
+        emptyLevel.level = -1;
+        return emptyLevel;
     }
 
-    public LevelValues nextLevel(int xPoz1, int xPoz2, int yPoz1, int yPoz2)
+    public LevelValues nextLevel()
     {
+        float[] vals;
         LevelValues nextLevel = new LevelValues();
         nextLevel.level = level +1;
-        nextLevel.xPoz1 = xPoz1;
-        nextLevel.xPoz2 = xPoz2;
-        nextLevel.yPoz1 = yPoz1;
-        nextLevel.yPoz2 = yPoz2;
         nextLevel.totalEnemies = (int)((30/(1+System.Math.Exp((double)(-3 *(nextLevel.level))/5+4))) + 2);
-        // nextLevel.possibleEnemies = possibleEnemies;
-        // if (nextLevel.level < enemyList.Length) {
-        //     nextLevel.possibleEnemies = enemyList[nextLevel.level];
-        // } else {
-        //     nextLevel.possibleEnemies = enemyList[^1];
-        // }
+        int[] currRegions;
+        if (regionLabel.ContainsKey(nextLevel.level)) {
+            currRegions = (int[]) regionLabel[nextLevel.level];
+        } else {
+            currRegions = (int[]) regionLabel[maxRecordedLevel];
+        }
+        nextLevel.possibleLocations = new float[currRegions.Length,4];
+        for (int i = 0; i < currRegions.Length; i++) {
+            nextLevel.possibleLocations[i,0] = ((float[]) regionSpawnValues[currRegions[i]])[0];
+            nextLevel.possibleLocations[i,1] = ((float[]) regionSpawnValues[currRegions[i]])[1];
+            nextLevel.possibleLocations[i,2] = ((float[]) regionSpawnValues[currRegions[i]])[2];
+            nextLevel.possibleLocations[i,3] = ((float[]) regionSpawnValues[currRegions[i]])[3];
+
+        }
         return nextLevel;
     }
+
+
 
     // Update is called once per frame
     void Update()

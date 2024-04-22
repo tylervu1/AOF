@@ -5,10 +5,10 @@ using UnityEngine;
 public class EnemySpawning : MonoBehaviour
 {
     [Header("types of enemies")]
-    public GameObject banana;
-    public GameObject lemon;
-    public GameObject melon;
-    public GameObject carrot;
+    public static GameObject banana;
+    public static GameObject lemon;
+    public static GameObject melon;
+    public static GameObject carrot;
 
     [Header("For instantiating enemies")]
     public GameObject player;
@@ -16,53 +16,60 @@ public class EnemySpawning : MonoBehaviour
     public GameControl game;
 
     [Header("Spawning control")]
-    public float xPoz;
-    public float yPoz;
+    public float[,] possibleLocations;
+    // public float yPoz;
     [SerializeField] float currTime, maxTime;
     public static int enemyCount = 0;
     public int numEnemiesToSpawn;
     public GameObject[] possibleEnemies;
     private List<GameObject> activeEnemies = new List<GameObject>();
+    public bool waves;
 
     // Start is called before the first frame update
     void Start()
     {
-        maxTime = 1.5f;
+        maxTime = 3f;
         currTime = maxTime/2;
         possibleEnemies = new GameObject[] {banana, lemon, melon, carrot};
-        // maxEnemy = game.GetMaxEnemies();
+        possibleLocations = new float[1,4] {{0, 0, 0, 0}};
     }
 
     // Update is called once per frame
     void Update()
     {   
-        // Debug.Log($"{enemyCount}, {numEnemiesToSpawn}");
         if (enemyCount == 0 && numEnemiesToSpawn == 0) {
             game.NextLevel();
         }
 
         if (numEnemiesToSpawn > 0)
         {
-            SpawnEnemy(possibleEnemies, game.currLevel.xPoz1, game.currLevel.xPoz2, game.currLevel.yPoz1, game.currLevel.yPoz2);
+            SpawnEnemy(possibleEnemies);
         }
     }
 
-    private void SpawnEnemy(GameObject[] possibleEnemies, float xpoz1, float xpoz2, float ypoz1, float ypoz2) {
+    private void SpawnEnemy(GameObject[] possibleEnemies) {
+        // Check if the enemy will spawn at this time
         currTime -= Time.deltaTime;
         if (currTime >0) return;
-        // Debug.Log($"Possible Enemies Length {possibleEnemies[0]}");
         numEnemiesToSpawn -=1;
         enemyCount += 1;
 
         Debug.Log($"spawnign enemy, {numEnemiesToSpawn} left, {enemyCount} enemeis left on the field");
-        currTime = maxTime;
+        currTime = Random.Range(1, maxTime);
 
-        xPoz = Random.Range(xpoz1, xpoz2);
-        yPoz = Random.Range(ypoz1, ypoz2);
+        //Choosing the location to spawn the enemy
+        var randomLocation = new System.Random();
+        int indRegion = randomLocation.Next(possibleLocations.GetLength(0));
+        Debug.Log($"{indRegion}, {possibleLocations.GetLength(0)}");
+
+        float xPoz = Random.Range(possibleLocations[indRegion,0], possibleLocations[indRegion,1]);
+        float yPoz = Random.Range(possibleLocations[indRegion,2], possibleLocations[indRegion,3]);
 
         // Choosing the next enemey
         var random = new System.Random();
         int ind = random.Next(possibleEnemies.Length);
+
+        //Spawning the enemy
         GameObject enemy = Instantiate(possibleEnemies[ind], new Vector3(xPoz, 5, yPoz), Quaternion.identity);
         EnemySystem enemyScript = enemy.GetComponent<EnemySystem>();
         enemyScript.target= target;
@@ -76,7 +83,6 @@ public class EnemySpawning : MonoBehaviour
     public void RemoveEnemy(GameObject enemy) {
         if (activeEnemies.Contains(enemy)) {
             activeEnemies.Remove(enemy);
-            Debug.Log($"Removed Enemey. Enemies left {activeEnemies.Count}");
             enemyCount -=1;
         }
     }

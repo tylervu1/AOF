@@ -15,7 +15,7 @@ public class playerBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Enemy") {
-            Debug.Log("hit enemey");
+            // Debug.Log("hit enemey");
             EnemySystem enemy = other.gameObject.transform.parent.gameObject.GetComponentInChildren<EnemySystem>();
             if (enemy) 
             {
@@ -25,7 +25,7 @@ public class playerBullet : MonoBehaviour
                 Destroy(gameObject);
             }
         } else if (LayerMask.LayerToName(other.gameObject.layer) == "Ground") {
-            Debug.Log("hit Ground");
+            // Debug.Log("hit Ground");
         }
     }
 
