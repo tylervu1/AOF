@@ -9,8 +9,8 @@ public class GameControl : MonoBehaviour
     public GUISkin skin;
     public TMP_Text ScoreText;
     public TMP_Text LevelText;
+    public TMP_Text levelTextProgress;
     public TMP_Text EndText;
-
 
     [Header("types of enemies")]
     public GameObject banana;
@@ -22,8 +22,10 @@ public class GameControl : MonoBehaviour
     [Header("Game Stats")]
     public static int score = 0; 
     public EnemySpawning enemySpawning;
+  
 
     public LevelValues currLevel;
+    public PlayerMovement player;
 
     // Start is called before the first frame update
     void Start()
@@ -73,17 +75,21 @@ public class GameControl : MonoBehaviour
             currLevel.possibleEnemies = enemyList[^1];
         }
 
-        LevelText.SetText($"Moving onto level {currLevel.level}!");
+        levelTextProgress.SetText($"Current Level: {currLevel.level + 1}"); // shows current level on side display
+
+        LevelText.SetText($"Moving onto level {currLevel.level + 1}!");
         LevelText.SetText("");
         enemySpawning.numEnemiesToSpawn = currLevel.totalEnemies;
         enemySpawning.possibleEnemies = currLevel.possibleEnemies;
         enemySpawning.possibleLocations = currLevel.possibleLocations;
+        player.health = player.max_health;
+        player.healthBar.setHealth(player.health);
     }
 
     public void EndGame() 
     {
         Time.timeScale= 0;
-        EndText.SetText($"Game Over! \n Your score was {score}");
+        EndText.SetText($"Game Over! \nYour score was {score}");
     }
 
     void OnGUI() {

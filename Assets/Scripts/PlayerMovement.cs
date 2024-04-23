@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform bulletSpawnPoint;
 
     [Header("Health")]
-    private float health, max_health = 10f;
+    public float health, max_health = 10f;
     public HealthBar healthBar;
 
     [Header("Sounds")]

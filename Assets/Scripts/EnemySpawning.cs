@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EnemySpawning : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class EnemySpawning : MonoBehaviour
     public GameObject player;
     public Transform target;
     public GameControl game;
+
+    [Header("Stats")]
+    public TMP_Text numEnemyText;
 
     [Header("Spawning control")]
     public float[,] possibleLocations;
@@ -53,6 +57,7 @@ public class EnemySpawning : MonoBehaviour
         if (currTime >0) return;
         numEnemiesToSpawn -=1;
         enemyCount += 1;
+        enemyCountUpdate(enemyCount);
 
         Debug.Log($"spawnign enemy, {numEnemiesToSpawn} left, {enemyCount} enemeis left on the field");
         currTime = Random.Range(1, maxTime);
@@ -84,7 +89,11 @@ public class EnemySpawning : MonoBehaviour
         if (activeEnemies.Contains(enemy)) {
             activeEnemies.Remove(enemy);
             enemyCount -=1;
+            enemyCountUpdate(enemyCount);
         }
+    }
+    public void enemyCountUpdate(int n) {
+        numEnemyText.SetText($"Enemies Left: {enemyCount}");
     }
 }
 
