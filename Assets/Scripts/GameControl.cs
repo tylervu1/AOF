@@ -65,6 +65,12 @@ public class GameControl : MonoBehaviour
         ScoreText.SetText($"Score: {score}");
     }
 
+
+    IEnumerator Delay(float seconds) {
+        yield return new WaitForSeconds(seconds);
+        LevelText.SetText("");
+    }
+
     public void NextLevel() //how to make new level only appear for a few seconds
     {
         Debug.Log($"Moving on to level {currLevel.level + 1}");
@@ -76,9 +82,14 @@ public class GameControl : MonoBehaviour
         }
 
         levelTextProgress.SetText($"Current Level: {currLevel.level + 1}"); // shows current level on side display
+        
+        if (currLevel.level != 0) {
+            LevelText.SetText($"Next Level: {currLevel.level + 1}!");
+        } else {
+            LevelText.SetText($"Starting Level {currLevel.level + 1}.");
+        }
+        StartCoroutine(Delay(2.0f));
 
-        LevelText.SetText($"Moving onto level {currLevel.level + 1}!");
-        LevelText.SetText("");
         enemySpawning.numEnemiesToSpawn = currLevel.totalEnemies;
         enemySpawning.possibleEnemies = currLevel.possibleEnemies;
         enemySpawning.possibleLocations = currLevel.possibleLocations;
@@ -89,6 +100,7 @@ public class GameControl : MonoBehaviour
     public void EndGame() 
     {
         Time.timeScale= 0;
+        LevelText.SetText("");
         EndText.SetText($"Game Over! \nYour score was {score}");
     }
 
