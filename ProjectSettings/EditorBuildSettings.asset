@@ -8,16 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 8d0c887f0f652e545bde1dfdbcd2dbd3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/La Musica.unity
     guid: b39edf6fba9ac44b0a6ce77059e92822
   - enabled: 1
-    path: Assets/Scenes/Level Preview.unity
-    guid: 0f48091ed19187c47a314d76cf9efc9f
-  - enabled: 1
     path: Assets/Scenes/Enemy Spawning.unity
     guid: ec99cbf98d6ca42acbdea9d9fb6cfd7a
-  - enabled: 1
+  - enabled: 0
+    path: Assets/Scenes/Level Preview.unity
+    guid: 0f48091ed19187c47a314d76cf9efc9f
+  - enabled: 0
     path: Assets/Scenes/Main.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}
